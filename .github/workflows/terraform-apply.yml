@@ -1,9 +1,6 @@
-name: "Terraform plan"
-
-on:
-  push:
-    branches:
-      - main
+name: Terraform apply
+on: 
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -34,7 +31,7 @@ jobs:
         run: terraform plan -no-color
         # working-directory: "./cloudwatch-module"
 
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve
-      #   working-directory: "./cloudwatch-module"
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: "./cloudwatch-module"
