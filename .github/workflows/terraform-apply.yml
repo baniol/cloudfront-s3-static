@@ -25,13 +25,13 @@ jobs:
             terraform init
         # working-directory: "./cloudwatch-module"
 
-      - name: Terraform Plan
-        id: plan
-        if: github.event_name == 'push'
-        run: terraform plan -no-color
-        # working-directory: "./cloudwatch-module"
+      # - name: Terraform Plan
+      #   id: plan
+      #   if: github.event_name == 'push'
+      #   run: terraform plan -no-color
+      #   # working-directory: "./cloudwatch-module"
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
-        working-directory: "./cloudwatch-module"
+        # working-directory: "./cloudwatch-module"

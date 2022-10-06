@@ -28,6 +28,8 @@ resource "aws_s3_bucket_public_access_block" "mkdocs" {
 
 data "aws_iam_policy_document" "allow_access_from_cloudfront" {
   statement {
+
+    sid = "AllowFromCloudfront"
     principals {
       type        = "Service"
       identifiers = ["cloudfront.amazonaws.com"]
