@@ -128,4 +128,9 @@ resource "aws_cloudfront_distribution" "mkdocs-distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+
+  function_association {
+    event_type = "viewer-request"
+    function_arn = aws_cloudfront_distribution.mkdocs.arn
+  }
 }
