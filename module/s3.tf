@@ -1,24 +1,24 @@
-resource "aws_s3_bucket" "mkdocs" {
-  bucket = "baniol-mkdocs-resources"
+resource "aws_s3_bucket" "static" {
+  bucket = var.bucket_name
 
-  tags = {
-    Name        = "baniol-mkdocs-resources"
-    Environment = "Dev"
-  }
+  # tags = {
+  #   Name        = "baniol-static-resources"
+  #   Environment = "Dev"
+  # }
 }
 
-resource "aws_s3_bucket_acl" "mkdocs" {
-  bucket = aws_s3_bucket.mkdocs.id
+resource "aws_s3_bucket_acl" "static" {
+  bucket = aws_s3_bucket.static.id
   acl    = "private"
 }
 
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
-  bucket = aws_s3_bucket.mkdocs.id
+  bucket = aws_s3_bucket.static.id
   policy = data.aws_iam_policy_document.allow_access_from_cloudfront.json
 }
 
-resource "aws_s3_bucket_public_access_block" "mkdocs" {
-  bucket = aws_s3_bucket.mkdocs.id
+resource "aws_s3_bucket_public_access_block" "static" {
+  bucket = aws_s3_bucket.static.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -40,13 +40,13 @@ data "aws_iam_policy_document" "allow_access_from_cloudfront" {
     ]
 
     resources = [
-      format("%s/*", aws_s3_bucket.mkdocs.arn)
+      format("%s/*", aws_s3_bucket.static.arn)
     ]
 
     condition {
-      test = "StringEquals"
-      variable =  "AWS:SourceArn"
-      values = [aws_cloudfront_distribution.mkdocs-distribution.arn]
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.static-distribution.arn]
     }
   }
 }
