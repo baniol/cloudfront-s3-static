@@ -15,3 +15,8 @@ variable "hosted_zone_name" {
 variable "subdomain_name" {
   type = string
 }
+
+variable "region" {
+  type = string
+  default = "eu-central-1"
+}
