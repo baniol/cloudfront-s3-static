@@ -32,7 +32,7 @@ resource "aws_cloudfront_distribution" "static-distribution" {
   aliases = [local.domain_name]
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.s3_origin_id
 
@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "static-distribution" {
 
     viewer_protocol_policy = "allow-all"
     min_ttl                = 0
-    default_ttl            = 3600
+    default_ttl            = 900
     max_ttl                = 86400
 
     function_association {
